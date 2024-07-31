@@ -1,0 +1,442 @@
+@import url('bootstrap.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Train+One&display=swap');
+:root{
+    --bg-secondery-50:#EEEEEE;
+    --bg-seconddark-80:rgba(128, 128, 128, 0.8);
+}
+*::selection{
+    background-color: limegreen;
+    color: white !important;
+}
+.navbar{
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    width: 100%;
+    padding: 10px 30px ;
+}
+.nav-item:hover .nav-link{
+    text-decoration: underline;
+}
+.nav-link{
+    font-size: 20px;
+    margin: 0 10px;
+}
+.nav-item .nav-link.active{
+    color: red !important;
+    text-decoration: underline;
+}
+.nav-item .nav-link.link-contect.active{
+    background-color: lightblue !important;
+    color: white !important;
+    text-decoration: unset !important;
+    border-radius: 10px;
+}
+
+/* main */
+.blog-about{
+    /* height: calc(100vh - 54px); */
+    padding: 30px 50px !important;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.blog-about .profile,.blog-resume .profile{
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.blog-about .profile img,.blog-resume .profile img{
+    width: 100% ;
+    height: 100% ;
+    object-fit: cover;
+}
+
+.blog-about .detail{
+    height: auto;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.blog-about .detail .name{
+    text-transform: uppercase;
+    font-family: "Train One", system-ui;
+    font-weight: bolder;
+    color: rgb(0, 255, 183);
+}
+.blog-about .detail .name:hover{
+    color: rgb(8, 214, 255);
+}
+.blog-about .detail p.description{
+    letter-spacing: 2px;
+    word-wrap: break-word;
+    font-family: "Kode Mono", monospace;
+    color: white;
+}
+
+.blog-about .detail .description{
+    color: white;
+}
+.blog-about .detail a.description{
+    background-color: transparent;
+    border-radius: 20px;
+    padding: 8px;
+    border: 1px solid white !important;
+    color: white;
+    text-decoration: none;
+}
+
+
+.blog-resume{
+    position: relative;
+    padding: 30px 50px !important;
+}
+.blog-resume .profile-name{
+    position: sticky;
+    top: 200px;
+    height: fit-content;
+}
+.blog-resume .part .part-title{
+    text-transform: uppercase;
+    border-bottom:5px double black;
+}
+.blog-resume .part .part-description{
+    font-size: 20px;
+}
+.blog-resume .part .part-description .part-location{
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+.blog-resume .part .part-description .part-location li{
+    width: 50%;
+    margin: 5px 0;
+}
+.blog-resume .part .part-description .part-school li{
+    width: 100%;
+    font-weight: bold;
+    color: black;
+}
+
+.blog-resume .part .part-description .part-location li ul{
+    list-style: none;
+}
+.blog-resume .part .part-description .part-location li ul li{
+    font-weight: normal;
+}
+.blog-resume .part .part-description .part-location li ul li:last-child{
+    color: gray;
+    font-family: "My Soul", cursive;
+}
+.blog-resume .part-expirence .part-description .part-location li ul li:first-child{
+    font-weight: bold;
+}
+.blog-resume .part-expirence .part-description .part-location li ul li:last-child{
+    color: black;
+    font-family: unset;
+}
+.blog-resume .part-skill .part-description .part-location li ul{
+    display: flex;
+    flex-wrap: wrap;
+}
+.blog-resume .part-skill .part-description .part-location li ul li{
+    width: 50%;
+    padding: 0 20px;
+}
+.blog-resume .part-skill .part-description .part-location li ul li:last-child{
+    color: black;
+    font-family: unset;
+}
+.blog-resume .part-skill .part-description .part-location li ul li .title{
+    text-align: center;
+}
+.blog-resume .part-skill .part-description .part-location li ul li .outside-gray{
+    width: 100%;
+    height: 15px;
+    overflow: hidden;
+    border-radius: 25px;
+    background-color: rgb(166, 166, 166);
+}
+.blog-resume .part-skill .part-description .part-location li ul li .outside-gray .inside-gray{
+    border-radius: 25px;
+    height: 100%;
+    background-color: #00FFFF;
+}
+
+.blog-project{
+    padding: 50px !important;
+    background-color:rgba(174, 240, 195, 0.8);
+}
+.blog-project .container{
+    width: 75% !important;
+}
+.blog-project .container .row .h-300{
+    height: 300px;
+}
+.blog-project .container .row .box-project{
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+    position: relative;
+    overflow: hidden;
+}
+.blog-project .container .row .box-project .title{
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    bottom: 0;
+    padding: 5px 10px;
+    color: white;
+    font-size: 20px;
+    background-color: rgba(0, 238, 255, 0.677);
+}
+
+.blog-project .container .row .box-project .box-show{
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 300px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(87, 87, 87,0.6);
+    z-index: 2;
+    opacity: 1;
+    transition: 0.9s;
+}
+.blog-project .container .row .box-project:hover .box-show{
+    top: 0;
+}
+.blog-project .container .row .box-project:hover .bg-absolute{
+    top: 0;
+}
+.blog-project .container .row .box-project .box-show a{
+    text-decoration: none;
+    background-color: #0004ff;
+    opacity: 1;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px 0;
+}
+
+
+footer ul{
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+footer ul li{   
+    margin: 20px;
+    width: 40%;
+}
+footer ul li a{
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+}
+footer ul li a i{
+    margin-right: 5px;
+}
+
+
+
+
+
+
+
+@media (max-width: 575.99px) { 
+    .navbar-collapse a{
+        color: white !important;
+    }
+    .nav-item .nav-link.link-contect.active{
+        background-color: unset;
+        text-decoration: unset !important;
+    }
+    .navbar-collapse{
+        position: fixed;
+        top: -100%;
+        left: -100%;
+        z-index: 1;
+        background-color: rgba(96, 96, 96, 0.451);
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 0.8s;
+    }
+   
+    .blog-about .profile,.blog-resume .profile{
+        width: 250px;
+        height: 250px;
+    }
+    .blog-about{
+        height: auto !important;
+    }
+    .blog-about .detail .name{
+        font-size: 30px;
+    }
+    .blog-about .detail p.description{
+        font-size:15px;
+    }
+    .blog-resume .part .part-description .part-location{
+        padding: 0;
+    }
+
+    .blog-resume .part .part-description .part-location li{
+        width: 100%;
+        margin: 10px;
+    }
+    .blog-resume .part-skill .part-description .part-location li ul li{
+        width: 100%;
+        padding: 0;
+    }
+    footer ul li{
+        width: 100%;
+    }
+    
+}
+/* // Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) { 
+    .navbar-collapse a{
+        color: white !important;
+    }
+    .nav-item .nav-link.link-contect.active{
+        background-color: unset;
+        text-decoration: unset !important;
+    }
+    .navbar-collapse{
+        position: fixed;
+        top: -100%;
+        left: -100%;
+        z-index: 1;
+        background-color: rgba(96, 96, 96, 0.451);
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 0.8s;
+    }
+    .blog-about .profile,.blog-resume .profile{
+        width: 250px;
+        height: 250px;
+    }
+    .blog-about{
+        height: auto;
+    }
+    .blog-about .detail .name{
+        font-size: 30px;
+    }
+    .blog-about .detail p.description{
+        font-size:15px;
+    }
+    
+ }
+
+/* // Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+    
+    .blog-about .profile,.blog-resume .profile{
+        width:350px;
+        height: 350px;
+    }
+    
+    .blog-about .detail .name{
+        font-size: 40px;
+    }
+    .blog-about .detail p.description{
+        font-size: 20px;
+    }
+    footer {
+        padding: 20px 100px;
+    }
+    footer ul li{
+        width: 40%;
+    }
+ }
+
+/* // Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+    .navbar-collapse a{
+        color: black !important;
+    }
+    .navbar-collapse{
+        position: unset;
+        background-color:unset;
+        width: unset;
+        height: unset;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 0.8s;
+    }
+    #show-navbar{
+        display: none;
+    }
+    .blog-about .profile,.blog-resume .profile{
+        width:350px;
+        height: 350px;
+    }
+    
+    .blog-about .detail .name{
+        font-size: 40px;
+    }
+    .blog-about .detail p.description{
+        font-size: 20px;
+    }
+    .blog-resume .part .part-description .part-location{
+        padding: 0;
+    }
+
+    .blog-resume .part .part-description .part-location li{
+        width: 100%;
+        margin: 10px;
+    }
+    .blog-resume .part-skill .part-description .part-location li ul li{
+        width: 100%;
+        padding: 0;
+    }
+ }
+
+/* // X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+    .blog-about .profile,.blog-resume .profile{
+        width: 400px;
+        height: 400px;
+    }   
+    .blog-about .detail .name{
+        font-size: 50px;
+    }
+    .blog-about .detail p.description{
+        font-size: 25px;
+    }
+    .blog-resume .part .part-description .part-location{
+        padding: 10px 20px;
+    }
+
+    .blog-resume .part .part-description .part-location li{
+        width: 50%;
+        margin: 5px 0;
+    }
+    .blog-resume .part .part-description .part-school li{
+        width: 100%;
+    }
+    .blog-resume .part-skill .part-description .part-location li ul li{
+        width: 50%;
+        padding: 0 20px;
+        margin: 0;
+    }
+ }
+
+/* // XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) { 
+
+ }
