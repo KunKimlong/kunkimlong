@@ -3,7 +3,7 @@
         <div class="row justify-content-between align-items-center">
           <div class="col-lg-6 my-md-5 col-sm-12 col-12 d-flex justify-content-center">
             <div class="profile">
-              <img src="/src/assets/Image/kimlong.JPG" alt="">
+              <!-- <img src="/src/assets/Image/kimlong.JPG" alt=""> -->
             </div>
           </div>
           <div class="col-lg-6 my-md-5 col-sm-12 col-12 col-12 mt-3">
