@@ -8,4 +8,5 @@ export default defineConfig({
       '@': '/src', // Alias for the src directory
     },
   },
+  assetsInclude: ['**/*.JPG'],
 });

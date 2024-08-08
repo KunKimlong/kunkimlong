@@ -7,7 +7,7 @@
          <div class="col-lg-5 col-sm-12 d-flex justify-content-center">
           <div class="profile-name">
             <div class="profile">
-              <img src="../../assets/Image/kimlongprofile.jpg" alt="">
+              <img src="../assets/Image/kimlongprofile.jpg" alt="">
             </div>
             <h1 class="name text-center">Kun Kimlong</h1>
           </div>
