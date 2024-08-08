@@ -15,7 +15,7 @@
                   <a class="nav-link" href="#project">Project</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link link-contect" href="#contect">Contect</a>
+                  <a class="nav-link" href="#contect">Contect</a>
                 </li>
               </ul>
           </div>

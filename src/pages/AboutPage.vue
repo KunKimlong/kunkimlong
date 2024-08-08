@@ -1,5 +1,5 @@
 <template>
-    <div id="about" class="blog-about container-fluid p-0 bg-dark">
+    <div id="about" class="blog-about blog container-fluid p-0 bg-dark">
         <div class="row justify-content-between align-items-center">
           <div class="col-lg-6 my-md-5 col-sm-12 col-12 d-flex justify-content-center">
             <div class="profile">

@@ -1,10 +1,11 @@
 import skill from "./data";
+import project from "./project";
 $(document).ready(function(){
     
     var heightNavbar = $('.navbar').outerHeight();
     // alert(heightNavbar)
-    $('.blog-about').css('height','calc(100vh - '+heightNavbar+'px)');
-    $('.blog-about').css('margin-top',heightNavbar+'px');
+    $('.blog').css('height','calc(100vh - '+heightNavbar+'px)');
+    $('.blog').css('margin-top',heightNavbar+'px');
     $('.link-contect').click(function(){
         $(this).addClass('active')
     });
@@ -19,7 +20,7 @@ $(document).ready(function(){
             $('.link-contect').addClass('active');
         }
     });
-    console.log(skill);
+    // console.log(skill);
     var txt = '';
     skill.forEach(el=>{
         txt +=`
@@ -63,18 +64,36 @@ $(document).ready(function(){
         $('.bi-x-lg').addClass('bi-justify-left');
         $('.bi-x-lg').removeClass('bi-x-lg');
     })
-
+    var pshow = '';
+    project.forEach(el=>{
+        pshow+=`
+            <div class="col-md-6 col-12 p-3 h-350">
+                <div class="box-project">
+                    <div class="box-show">
+                        <a href="${el.sourceCode}" target="_blank">Source code</a>
+                    </div>
+                    <div class="title">${el.title}</div> 
+                    <img src="${el.thumbnail}" alt="">    
+                </div> 
+            </div>
+        `;
+    })
+    $('#show-project').html(pshow);
 
     var heightProject = $('.blog-project').outerHeight();
-    var viewportHeight = window.innerHeight;//100vh convert to px = 483
-    console.log(viewportHeight);
-    console.log(heightProject);
-    console.log((heightProject-viewportHeight)<viewportHeight);
+    // var viewportHeight = window.innerHeight;//100vh convert to px = 483
+    var viewportHeight = 483;
+    // console.log(viewportHeight);
+    // console.log(heightProject);
+    // console.log((heightProject-viewportHeight)<viewportHeight);
     if((heightProject-viewportHeight)<viewportHeight){
         $(".blog-project").css('height','100vh');
     }
     else{
         $(".blog-project").css('height','auto');
     }
+
+
+
     
 });
