@@ -73,7 +73,7 @@ $(document).ready(function(){
                         <a href="${el.sourceCode}" target="_blank">Source code</a>
                     </div>
                     <div class="title">${el.title}</div> 
-                    <img :src="${el.thumbnail}" alt="">    
+                    <img src="${el.thumbnail}" alt="">    
                 </div> 
             </div>
         `;
