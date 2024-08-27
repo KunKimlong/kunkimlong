@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import '@/assets/Js/jquery-3.7.1.min.js';
+import jQuery from '@/assets/Js/jquery-3.7.1.min.js'; // Import jQuery
+window.$ = window.jQuery = jQuery; // Make jQuery globally available
 import '@/assets/Js/script.js';
 import '@/assets/Js/data.js';
 import 'bootstrap/dist/css/bootstrap.min.css'
