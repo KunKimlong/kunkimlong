@@ -5,6 +5,7 @@ import '@/assets/Js/script.js';
 import '@/assets/Js/data.js';
 import '@/assets/Style/bootstrap.min.css';
 import '@/assets/Style/style.css';
+// import '@popperjs/core';
 import App from './App.vue'
 import router from "./routes.js";
 
