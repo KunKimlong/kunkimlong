@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@originjs/vite-plugin-commonjs": "^1.0.3",
+    "bootstrap": "^5.3.3",
     "vue": "^3.4.31",
     "vue-router": "^4.4.0"
   },
