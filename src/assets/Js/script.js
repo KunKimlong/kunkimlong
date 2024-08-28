@@ -3,6 +3,8 @@ import project from "./project";
 $(document).ready(function(){
     
     var heightNavbar = $('.navbar').outerHeight();
+//    console.log(heightNavbar);
+   
     // alert(heightNavbar)
     $('.blog').css('height','calc(100vh - '+heightNavbar+'px)');
     $('.blog').css('margin-top',heightNavbar+'px');
@@ -67,7 +69,7 @@ $(document).ready(function(){
     var pshow = '';
     project.forEach(el=>{
         pshow+=`
-            <div class="col-md-6 col-12 p-3 h-350">
+            <div class="col-md-6 col-12 p-md-3 p-0 h-350">
                 <div class="box-project">
                     <div class="box-show">
                         <a href="${el.sourceCode}" target="_blank">Source code</a>
