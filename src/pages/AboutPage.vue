@@ -1,9 +1,13 @@
+<script setup>
+  import resumePdf from "@/assets/Image/resume.pdf";
+</script>
 <template>
     <div id="about" class="blog-about blog container-fluid p-0 bg-dark">
         <div class="row justify-content-between align-items-center">
           <div class="col-lg-6 my-md-5 col-sm-12 col-12 d-flex justify-content-center">
             <div class="profile">
               <img src="/src/assets/Image/kimlong.JPG" alt="">
+               <!-- <img src="" alt=""> -->
             </div>
           </div>
           <div class="col-lg-6 my-md-5 col-sm-12 col-12 col-12 mt-3">
@@ -14,7 +18,7 @@
               <p class="description">
                 I'm a Phnom Penh based on Web Developer. Nowadays Working as Programming instructor who teach about C, C++, HTML, CSS, Bootstrap, Javascript, Jquery, PHP, MySql, Ajax, Laravel.
               </p>
-              <a download href="/src/assets/Image/resume.pdf" target="_blank" class="description">
+              <a download :href="resumePdf" target="_blank" class="description">
                 Download CV <i class="bi bi-arrow-down-circle"></i>
               </a>
             </div>
