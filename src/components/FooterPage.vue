@@ -6,18 +6,18 @@
         <form action="" class="row form">
             <div class="col-12 my-2">
                 <label for="">Name: </label>
-                <input type="text" class="form-control name" placeholder="Name">
+                <input type="text" id="name" class="form-control name" placeholder="Name">
             </div>
             <div class="col-12 my-2">
                 <label for="">Email: </label>
-                <input type="text" class="form-control email" placeholder="Email">
+                <input type="text" id="email" class="form-control email" placeholder="Email">
             </div>
             <div class="col-12 my-2">
                 <label for="">Message: </label>
-                <textarea class="form-control message" style="resize: none;" rows="10" placeholder="Message:"></textarea>
+                <textarea id="msg" class="form-control message" style="resize: none;" rows="10" placeholder="Message:"></textarea>
             </div>
             <div class="col-12 my-2">
-                <button class="btn btn-success">Submit</button>
+                <button id="btnSend" class="btn btn-success">Submit</button>
             </div>
         </form> 
       </div>
