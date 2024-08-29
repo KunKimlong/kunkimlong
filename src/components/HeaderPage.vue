@@ -16,8 +16,7 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#contect">Contect</a>
-                </li>
-                
+                </li>     
               </ul>
           </div>
         </nav>
