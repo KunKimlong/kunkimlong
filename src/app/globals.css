@@ -121,11 +121,20 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    @apply font-sans scroll-smooth;
+    caret-color: var(--primary);
+  }
   body {
     @apply bg-background text-foreground;
   }
-  html {
-    @apply font-sans scroll-smooth;
+  ::selection {
+    background: color-mix(in oklch, var(--primary) 35%, transparent);
+    color: var(--foreground);
+  }
+  input,
+  textarea {
+    caret-color: var(--primary);
   }
 }
 
