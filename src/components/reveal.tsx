@@ -67,7 +67,11 @@ export function RevealItem({
   className?: string;
 }) {
   return (
-    <motion.div className={className} variants={variants} transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}>
+    <motion.div
+      className={className}
+      variants={variants}
+      transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
+    >
       {children}
     </motion.div>
   );

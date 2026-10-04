@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { site } from "@/lib/data";
 import { geistSans, geistMono, instrumentSerif } from "./fonts";
 import "./globals.css";
+import {InspectGuard} from "@/components/inspect-guard";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://kimlongkun.dev";
 
@@ -74,7 +75,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} dark h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+      {children}
+      <InspectGuard />
+      </body>
     </html>
   );
 }

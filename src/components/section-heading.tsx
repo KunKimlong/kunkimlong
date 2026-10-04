@@ -15,12 +15,10 @@ export function SectionHeading({
           : "mb-14 max-w-xl"
       }
     >
-      <span className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+      <span className="text-primary text-xs font-medium tracking-[0.2em] uppercase">
         {eyebrow}
       </span>
-      <h2 className="mt-3 font-serif text-4xl italic sm:text-5xl">
-        {title}
-      </h2>
+      <h2 className="mt-3 font-serif text-4xl italic sm:text-5xl">{title}</h2>
     </div>
   );
 }

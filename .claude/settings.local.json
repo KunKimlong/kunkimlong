@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Drive D\\\\Kunkimlong-portfolio\" -Recurse -Force | Select-Object FullName, Length | ForEach-Object { $_.FullName.Replace\\(\"C:\\\\Drive D\\\\Kunkimlong-portfolio\\\\\",\"\"\\) + \"  \" + $_.Length })",
+      "Bash(npm -v)",
+      "PowerShell(npm *)",
+      "Bash(node -e ' *)"
+    ]
+  }
+}

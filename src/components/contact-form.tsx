@@ -58,17 +58,17 @@ export function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-5 rounded-3xl border border-border bg-card p-6 sm:p-8"
+      className="border-border bg-card space-y-5 rounded-3xl border p-6 sm:p-8"
     >
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="name" className="text-xs text-muted-foreground">
+          <Label htmlFor="name" className="text-muted-foreground text-xs">
             Your Name*
           </Label>
           <Input id="name" name="name" required />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="email" className="text-xs text-muted-foreground">
+          <Label htmlFor="email" className="text-muted-foreground text-xs">
             Your Email
           </Label>
           <Input id="email" name="email" type="email" />
@@ -76,14 +76,14 @@ export function ContactForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="subject" className="text-xs text-muted-foreground">
+        <Label htmlFor="subject" className="text-muted-foreground text-xs">
           Subject*
         </Label>
         <Input id="subject" name="subject" required />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="message" className="text-xs text-muted-foreground">
+        <Label htmlFor="message" className="text-muted-foreground text-xs">
           Message*
         </Label>
         <Textarea id="message" name="message" rows={6} required />
@@ -94,7 +94,7 @@ export function ContactForm() {
         disabled={sending}
         whileHover={{ scale: sending ? 1 : 1.02 }}
         whileTap={{ scale: sending ? 1 : 0.97 }}
-        className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-8 py-3 text-sm font-medium text-primary-foreground disabled:opacity-60 sm:w-auto"
+        className="bg-primary text-primary-foreground inline-flex w-full items-center justify-center gap-2 rounded-lg px-8 py-3 text-sm font-medium disabled:opacity-60 sm:w-auto"
       >
         <AnimatePresence mode="wait" initial={false}>
           {sending ? (

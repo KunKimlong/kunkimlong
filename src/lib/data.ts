@@ -70,36 +70,37 @@ export const experiences: Experience[] = [
 
 export type SkillGroup = {
   type: string;
-  skills: { name: string; level: number }[];
+  skills: { name: string; level: number; icon?: string }[];
 };
 
 export const skillGroups: SkillGroup[] = [
   {
     type: "Spoken Language",
     skills: [
-      { name: "Khmer", level: 100 },
-      { name: "English", level: 70 },
+      { name: "Khmer", level: 100, icon: "KhmerIcon" },
+      { name: "English", level: 70, icon: "EnglishIcon" },
     ],
   },
   {
     type: "Frontend Development",
     skills: [
-      { name: "HTML", level: 100 },
-      { name: "CSS", level: 80 },
-      { name: "Bootstrap", level: 80 },
-      { name: "JavaScript", level: 70 },
-      { name: "jQuery", level: 65 },
-      { name: "React", level: 70 },
-      { name: "Vue", level: 50 },
-      { name: "Angular", level: 60 },
+      { name: "HTML", level: 100, icon: "SiHtml5" },
+      { name: "CSS", level: 80, icon: "SiCss" },
+      { name: "Bootstrap", level: 80, icon: "SiBootstrap" },
+      { name: "JavaScript", level: 70, icon: "SiJavascript" },
+      { name: "jQuery", level: 65, icon: "SiJquery" },
+      { name: "React", level: 70, icon: "SiReact" },
+      { name: "Vue", level: 50, icon: "SiVuedotjs" },
+      { name: "Angular", level: 60, icon: "SiAngular" },
+      { name: "Next Js", level: 60, icon: "TbBrandNextjs" },
     ],
   },
   {
     type: "Backend Development",
     skills: [
-      { name: "PHP", level: 70 },
-      { name: "Laravel", level: 80 },
-      { name: "Java Spring", level: 70 },
+      { name: "PHP", level: 70, icon: "SiPhp" },
+      { name: "Laravel", level: 80, icon: "SiLaravel" },
+      { name: "Java Spring", level: 80, icon: "SiSpring" },
     ],
   },
 ];

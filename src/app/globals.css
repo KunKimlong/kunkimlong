@@ -122,7 +122,7 @@
     @apply border-border outline-ring/50;
   }
   html {
-    @apply font-sans scroll-smooth;
+    @apply scroll-smooth font-sans;
     caret-color: var(--primary);
   }
   body {
@@ -139,7 +139,9 @@
 }
 
 @utility hover-lift {
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
 
   &:hover {
     transform: translateY(-3px);
@@ -148,8 +150,12 @@
 }
 
 @keyframes pulse-ring {
-  0% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--primary) 55%, transparent); }
-  100% { box-shadow: 0 0 0 8px color-mix(in oklch, var(--primary) 0%, transparent); }
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklch, var(--primary) 55%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 8px color-mix(in oklch, var(--primary) 0%, transparent);
+  }
 }
 
 @utility animate-pulse-ring {
@@ -159,5 +165,28 @@
 @media (prefers-reduced-motion: reduce) {
   .animate-pulse-ring {
     animation: none;
+  }
+}
+
+/* app/globals.css */
+@keyframes marquee-scroll {
+  to {
+    transform: translateX(calc(-50% - 0.5rem)); /* half of gap-4 */
+  }
+}
+
+.marquee-track {
+  animation-name: marquee-scroll;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation-play-state: paused;
   }
 }

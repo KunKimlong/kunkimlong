@@ -33,7 +33,7 @@ export function SiteHeader() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link
           href="#home"
-          className="font-serif text-2xl italic text-foreground"
+          className="text-foreground font-serif text-2xl italic"
           onClick={() => setOpen(false)}
         >
           Kimlong.
@@ -44,17 +44,17 @@ export function SiteHeader() {
             <a
               key={link.href}
               href={link.href}
-              className="group relative text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="group text-muted-foreground hover:text-foreground relative text-sm transition-colors"
             >
               {link.label}
-              <span className="absolute -bottom-1 left-0 h-px w-0 bg-primary transition-all duration-200 group-hover:w-full" />
+              <span className="bg-primary absolute -bottom-1 left-0 h-px w-0 transition-all duration-200 group-hover:w-full" />
             </a>
           ))}
         </nav>
 
         <a
           href="#contact"
-          className="hidden rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 md:inline-flex"
+          className="bg-primary text-primary-foreground hidden rounded-lg px-5 py-2 text-sm font-medium transition-opacity hover:opacity-90 md:inline-flex"
         >
           Let&apos;s talk
         </a>
@@ -62,7 +62,7 @@ export function SiteHeader() {
         <button
           type="button"
           aria-label="Toggle menu"
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-foreground md:hidden"
+          className="border-border text-foreground flex h-10 w-10 items-center justify-center rounded-full border md:hidden"
           onClick={() => setOpen((v) => !v)}
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -71,7 +71,7 @@ export function SiteHeader() {
 
       <nav
         className={cn(
-          "grid overflow-hidden border-t border-border bg-background transition-all duration-300 md:hidden",
+          "border-border bg-background grid overflow-hidden border-t transition-all duration-300 md:hidden",
           open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
         )}
       >
@@ -80,7 +80,7 @@ export function SiteHeader() {
             <a
               key={link.href}
               href={link.href}
-              className="rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
+              className="text-muted-foreground hover:bg-muted hover:text-foreground rounded-lg px-3 py-2 text-sm"
               onClick={() => setOpen(false)}
             >
               {link.label}
@@ -88,7 +88,7 @@ export function SiteHeader() {
           ))}
           <a
             href="#contact"
-            className="mt-1 rounded-lg bg-primary px-3 py-2 text-center text-sm font-medium text-primary-foreground"
+            className="bg-primary text-primary-foreground mt-1 rounded-lg px-3 py-2 text-center text-sm font-medium"
             onClick={() => setOpen(false)}
           >
             Let&apos;s talk
