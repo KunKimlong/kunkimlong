@@ -1,0 +1,46 @@
+[
+  {
+    "slug": "integrating-laravel-with-java-spring-microservices",
+    "title": "Integrating Laravel with Java Spring Microservices",
+    "excerpt": "How I connected a Laravel HRMS to Spring services for employee reports and mail notifications, and what I learned about keeping the contract between them clean.",
+    "date": "2026-09-12",
+    "readTime": 6,
+    "tags": ["Laravel", "Java Spring", "Microservices"],
+    "url": "",
+    "content": [
+      {
+        "type": "paragraph",
+        "text": "When we built the HRMS at ALLWEB, the core app lived in Laravel, but reporting and mail notifications were better suited to separate Java Spring services. This post walks through how the two talk to each other."
+      },
+      {
+        "type": "heading",
+        "text": "Why split the work?"
+      },
+      {
+        "type": "paragraph",
+        "text": "Report generation is heavy and slow. Moving it into its own Spring service kept the Laravel app responsive and let us scale the two independently."
+      },
+      {
+        "type": "list",
+        "items": [
+          "Laravel owns users, employees and the admin UI",
+          "Spring builds reports and sends mail",
+          "Both share a clear REST contract"
+        ]
+      },
+      {
+        "type": "heading",
+        "text": "Calling the service from Laravel"
+      },
+      {
+        "type": "code",
+        "language": "php",
+        "code": "$response = Http::withToken($token)\n    ->post(config(\"services.reports.url\") . \"/reports\", [\n        \"employee_id\" => $employee->id,\n        \"month\" => $month,\n    ]);"
+      },
+      {
+        "type": "quote",
+        "text": "Agree on the contract first; the code on both sides gets simpler."
+      }
+    ]
+  }
+]

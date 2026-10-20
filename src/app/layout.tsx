@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import { site } from "@/lib/data";
 import { geistSans, geistMono, instrumentSerif } from "./fonts";
 import "./globals.css";
-import {InspectGuard} from "@/components/inspect-guard";
+import { InspectGuard } from "@/components/inspect-guard";
+import { CustomCursor } from "@/components/custom-cursor";
+import { PointerSpotlight } from "@/components/pointer-spotlight";
+import { MotionProvider } from "@/components/motion-provider";
+import { ScrollProgress } from "@/components/scroll-progress";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://kimlongkun.dev";
 
@@ -53,9 +57,13 @@ export const metadata: Metadata = {
     description: site.about,
     images: ["/images/profile-img.jpg"],
   },
+  // Code-lines K; the Lamp template swaps in its own in its layout
   icons: {
-    icon: "/favicon.png",
-    apple: "/apple-touch-icon.png",
+    icon: [
+      { url: "/icons/k-code-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icons/k-code.svg", type: "image/svg+xml" },
+    ],
+    apple: "/icons/k-code-apple.png",
   },
   robots: {
     index: true,
@@ -76,8 +84,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} dark h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-      {children}
-      <InspectGuard />
+        <MotionProvider>
+          <ScrollProgress />
+          {children}
+        </MotionProvider>
+        <InspectGuard />
+        <CustomCursor />
+        <PointerSpotlight />
       </body>
     </html>
   );

@@ -3,6 +3,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { Hero } from "@/components/sections/hero";
 import { About } from "@/components/sections/about";
 import { Resume } from "@/components/sections/resume";
+import { Blog } from "@/components/sections/blog";
 import { Contact } from "@/components/sections/contact";
 import { Toaster } from "@/components/ui/sonner";
 import { site } from "@/lib/data";
@@ -38,6 +39,7 @@ export default function Home() {
         <Hero />
         <About />
         <Resume />
+        <Blog />
         <Contact />
       </main>
       <SiteFooter />

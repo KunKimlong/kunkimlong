@@ -27,8 +27,6 @@ const images: string[] = [
   prefix + "php.png",
   prefix + "laravel.png",
   prefix + "spring.png",
-
-
 ];
 
 export function About() {
@@ -40,7 +38,7 @@ export function About() {
         </Reveal>
 
         <div className="grid gap-6 lg:grid-cols-5">
-          <Reveal className="hover-lift border-border bg-card rounded-3xl border p-8 lg:col-span-3">
+          <Reveal className="hover-lift spotlight border-border bg-card min-w-0 rounded-3xl border p-6 sm:p-8 lg:col-span-3">
             <p className="text-foreground/90 leading-relaxed text-balance">
               {site.about}
             </p>
@@ -56,7 +54,7 @@ export function About() {
                   </span>
                   <div className="min-w-0">
                     <p className="text-muted-foreground text-xs">{label}</p>
-                    <p className="truncate text-sm font-medium">{value}</p>
+                    <p className="text-sm font-medium break-words">{value}</p>
                   </div>
                 </RevealItem>
               ))}
@@ -65,7 +63,7 @@ export function About() {
 
           <Reveal
             delay={0.15}
-            className="hover-lift border-border border-l-primary bg-card flex flex-col justify-center gap-6 rounded-3xl border border-l-4 p-8 lg:col-span-2"
+            className="hover-lift spotlight border-border border-l-primary bg-card flex min-w-0 flex-col justify-center gap-6 rounded-3xl border border-l-4 p-6 sm:p-8 lg:col-span-2"
           >
             <p className="font-serif text-3xl leading-snug italic">
               Building things for the web.
@@ -81,7 +79,7 @@ export function About() {
           {skillGroups.map((group) => (
             <RevealItem
               key={group.type}
-              className="hover-lift border-border bg-card rounded-3xl border p-6"
+              className="hover-lift spotlight border-border bg-card rounded-3xl border p-6"
             >
               <h3 className="text-accent mb-5 text-sm font-medium tracking-wide uppercase">
                 {group.type}

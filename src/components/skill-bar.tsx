@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Progress } from "@/components/ui/progress";
 import { IconTypes } from "@/components/icon-types";
+import { CountUp } from "@/components/count-up";
 
 export function SkillBar({
   name,
@@ -44,7 +45,11 @@ export function SkillBar({
           )}
           {name}
         </span>
-        <span className="text-muted-foreground text-xs">{level}%</span>
+        <CountUp
+          value={`${level}%`}
+          duration={1}
+          className="text-muted-foreground text-xs"
+        />
       </div>
       <Progress
         value={value}

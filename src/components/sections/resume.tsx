@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
+import { useRef, type ReactNode } from "react";
 import { GraduationCap, Briefcase } from "lucide-react";
 import { education, experiences } from "@/lib/data";
 import { SectionHeading } from "@/components/section-heading";
@@ -11,6 +12,39 @@ const itemVariants = {
   hidden: { opacity: 0, x: -16 },
   show: { opacity: 1, x: 0 },
 };
+
+/** Timeline whose rail fills with amber as the list scrolls through the viewport */
+function Timeline({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 75%", "end 55%"],
+  });
+  const scaleY = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
+
+  return (
+    <div ref={ref} className="relative pl-8">
+      <span aria-hidden className="bg-border absolute inset-y-0 left-0 w-px" />
+      <motion.span
+        aria-hidden
+        className="bg-primary absolute inset-y-0 left-0 w-px origin-top"
+        style={{ scaleY }}
+      />
+      <motion.ol
+        className="space-y-10"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={{
+          hidden: {},
+          show: { transition: { staggerChildren: 0.15 } },
+        }}
+      >
+        {children}
+      </motion.ol>
+    </div>
+  );
+}
 
 export function Resume() {
   return (
@@ -26,16 +60,7 @@ export function Resume() {
               <GraduationCap className="text-accent h-5 w-5" />
               Education
             </h3>
-            <motion.ol
-              className="border-border relative space-y-10 border-l pl-8"
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-80px" }}
-              variants={{
-                hidden: {},
-                show: { transition: { staggerChildren: 0.15 } },
-              }}
-            >
+            <Timeline>
               {education.map((item) => (
                 <motion.li
                   key={item.title}
@@ -55,7 +80,7 @@ export function Resume() {
                   </p>
                 </motion.li>
               ))}
-            </motion.ol>
+            </Timeline>
           </div>
 
           <div>
@@ -63,16 +88,7 @@ export function Resume() {
               <Briefcase className="text-accent h-5 w-5" />
               Professional Experience
             </h3>
-            <motion.ol
-              className="border-border relative space-y-10 border-l pl-8"
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-80px" }}
-              variants={{
-                hidden: {},
-                show: { transition: { staggerChildren: 0.15 } },
-              }}
-            >
+            <Timeline>
               {experiences.map((exp) => {
                 const current = exp.endY === null;
                 return (
@@ -107,7 +123,7 @@ export function Resume() {
                       {exp.details.map((detail, i) => (
                         <li
                           key={i}
-                          className="border-border bg-card text-foreground/85 rounded-2xl border px-4 py-3 text-sm leading-relaxed"
+                          className="spotlight border-border bg-card text-foreground/85 rounded-2xl border px-4 py-3 text-sm leading-relaxed"
                         >
                           {detail}
                         </li>
@@ -116,7 +132,7 @@ export function Resume() {
                   </motion.li>
                 );
               })}
-            </motion.ol>
+            </Timeline>
           </div>
         </div>
       </div>

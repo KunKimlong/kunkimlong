@@ -1,4 +1,9 @@
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import {
+  Bricolage_Grotesque,
+  Geist,
+  Geist_Mono,
+  Instrument_Serif,
+} from "next/font/google";
 
 export const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,4 +20,11 @@ export const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
   style: ["normal", "italic"],
+});
+
+// Display face for the lamp template only
+export const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
+  subsets: ["latin"],
+  weight: ["400", "700"],
 });

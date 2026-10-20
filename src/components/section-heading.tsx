@@ -1,3 +1,5 @@
+import { SplitReveal } from "@/components/split-reveal";
+
 export function SectionHeading({
   eyebrow,
   title,
@@ -18,7 +20,9 @@ export function SectionHeading({
       <span className="text-primary text-xs font-medium tracking-[0.2em] uppercase">
         {eyebrow}
       </span>
-      <h2 className="mt-3 font-serif text-4xl italic sm:text-5xl">{title}</h2>
+      <h2 className="mt-3 font-serif text-4xl italic sm:text-5xl">
+        <SplitReveal text={title} delay={0.1} />
+      </h2>
     </div>
   );
 }

@@ -38,7 +38,7 @@ export function Contact() {
         </Reveal>
 
         <div className="grid gap-10 lg:grid-cols-5">
-          <Reveal className="lg:col-span-2">
+          <Reveal className="min-w-0 lg:col-span-2">
             <p className="text-muted-foreground text-balance">
               Have a project in mind or just want to say hi? My inbox is always
               open — I try to reply within a day.
@@ -53,7 +53,8 @@ export function Contact() {
                     </span>
                     <div className="min-w-0">
                       <p className="text-muted-foreground text-xs">{label}</p>
-                      <p className="truncate text-sm font-medium">{value}</p>
+                      {/* Wraps rather than truncating, so the full address shows on phones */}
+                      <p className="text-sm font-medium break-words">{value}</p>
                     </div>
                   </div>
                 );
@@ -90,7 +91,7 @@ export function Contact() {
             </div>
           </Reveal>
 
-          <Reveal delay={0.15} className="lg:col-span-3">
+          <Reveal delay={0.15} className="min-w-0 lg:col-span-3">
             <ContactForm />
           </Reveal>
         </div>

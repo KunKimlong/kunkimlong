@@ -6,7 +6,8 @@ import { useEffect } from "react";
 function isEditable(target: EventTarget | null) {
   return (
     target instanceof HTMLElement &&
-    (target.isContentEditable || target.closest("input, textarea, [contenteditable='true']") !== null)
+    (target.isContentEditable ||
+      target.closest("input, textarea, [contenteditable='true']") !== null)
   );
 }
 
@@ -27,7 +28,9 @@ export function InspectGuard() {
       const blocked =
         e.key === "F12" ||
         // Ctrl+Shift+I/J/C (Windows, Linux) and Cmd+Option+I/J/C (Mac): DevTools panels
-        (ctrlOrCmd && (e.shiftKey || e.altKey) && ["KeyI", "KeyJ", "KeyC"].includes(e.code)) ||
+        (ctrlOrCmd &&
+          (e.shiftKey || e.altKey) &&
+          ["KeyI", "KeyJ", "KeyC"].includes(e.code)) ||
         // Ctrl+U / Cmd+Option+U: view source
         (ctrlOrCmd && e.code === "KeyU");
       if (blocked) {

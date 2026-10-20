@@ -1,8 +1,10 @@
-import Image from "next/image";
+import { HeroPortrait } from "@/components/hero-portrait";
+import { SplitReveal } from "@/components/split-reveal";
+import { CountUp } from "@/components/count-up";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { site, yearsOfExperience } from "@/lib/data";
 import { TypedRoles } from "@/components/typed-roles";
-import { Reveal, RevealGroup, RevealItem } from "@/components/reveal";
+import { RevealGroup, RevealItem } from "@/components/reveal";
 
 const stats = [
   { value: `${yearsOfExperience}+`, label: "Years experience" },
@@ -16,23 +18,36 @@ export function Hero() {
       id="home"
       className="relative flex min-h-[92vh] items-center pt-16"
     >
-      <div className="relative z-10 mx-auto grid w-full max-w-6xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+      <div className="relative z-10 mx-auto grid w-full max-w-6xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-[1.1fr_0.9fr] md:items-center">
         <RevealGroup
           className="flex flex-col items-start gap-6 text-left"
           stagger={0.12}
         >
           <RevealItem>
-            <span className="text-muted-foreground text-xs font-medium tracking-[0.2em] uppercase">
-              Web Developer &middot; Phnom Penh, Cambodia
+            {/* Each part wraps whole; the dot leading a new line is clipped off */}
+            <span className="text-muted-foreground block overflow-hidden text-xs font-medium tracking-[0.2em] uppercase">
+              <span className="-ml-[2em] flex flex-wrap">
+                {[site.role, "Phnom Penh, Cambodia"].map((part) => (
+                  <span
+                    key={part}
+                    className="whitespace-nowrap before:inline-block before:w-[2em] before:text-center before:content-['·']"
+                  >
+                    {part}
+                  </span>
+                ))}
+              </span>
             </span>
           </RevealItem>
 
           <RevealItem>
             <h1 className="text-4xl leading-tight font-semibold tracking-tight sm:text-5xl lg:text-6xl">
               Hi, I&apos;m{" "}
-              <span className="text-primary font-serif italic">
-                {site.name}
-              </span>
+              <SplitReveal
+                text={site.name}
+                by="char"
+                delay={0.35}
+                className="text-primary font-serif italic"
+              />
             </h1>
           </RevealItem>
 
@@ -44,9 +59,13 @@ export function Hero() {
 
           <RevealItem>
             <p className="text-muted-foreground max-w-xl text-balance">
-              I design and build full-stack web applications — from Laravel and
-              Java Spring APIs to React and Angular interfaces — turning ideas
-              into fast, reliable products.
+              {site.intro}
+            </p>
+          </RevealItem>
+
+          <RevealItem>
+            <p className="border-primary text-foreground border-l-2 pl-4 font-serif text-lg italic sm:text-xl">
+              &ldquo;{site.slogan}&rdquo;
             </p>
           </RevealItem>
 
@@ -69,25 +88,24 @@ export function Hero() {
           <RevealItem className="border-border flex flex-wrap gap-8 border-t pt-6">
             {stats.map((stat) => (
               <div key={stat.label}>
-                <p className="text-2xl font-semibold">{stat.value}</p>
+                <CountUp
+                  value={stat.value}
+                  className="block text-2xl font-semibold"
+                />
                 <p className="text-muted-foreground text-xs">{stat.label}</p>
               </div>
             ))}
           </RevealItem>
         </RevealGroup>
 
-        <Reveal delay={0.25} className="mx-auto w-full max-w-sm lg:mx-0">
-          <div className="border-border bg-card overflow-hidden rounded-2xl border">
-            <Image
-              src="/images/me.jpg"
-              alt={site.name}
-              width={480}
-              height={560}
-              priority
-              className="aspect-[4/5] w-full object-cover grayscale-[15%]"
-            />
-          </div>
-        </Reveal>
+        <div className="mx-auto w-full max-w-sm md:mx-0">
+          <HeroPortrait
+            src={site.photo}
+            alt={site.name}
+            name={site.name}
+            place="Phnom Penh · KH"
+          />
+        </div>
       </div>
 
       <a
@@ -95,7 +113,7 @@ export function Hero() {
         aria-label="Scroll to About section"
         className="text-muted-foreground hover:text-foreground absolute bottom-6 left-1/2 z-10 -translate-x-1/2 transition-colors"
       >
-        <ChevronDown className="h-6 w-6" />
+        <ChevronDown className="animate-nudge h-6 w-6" />
       </a>
     </section>
   );
