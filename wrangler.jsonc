@@ -1,5 +1,5 @@
 {
-  "name": "portfolio",
+  "name": "kunkimlong",
   "compatibility_date": "2026-10-01",
   // Answers the contact form; everything else is the static site in ./out
   "main": "./worker/index.ts",
