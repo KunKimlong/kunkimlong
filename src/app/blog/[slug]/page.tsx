@@ -8,8 +8,7 @@ import { BlogCard, formatBlogDate } from "@/components/blog-card";
 import { BlogContent } from "@/components/blog-content";
 import { Reveal } from "@/components/reveal";
 import { blogs, getBlog, site } from "@/lib/data";
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://kimlongkun.dev";
+import { jsonLd, siteUrl } from "@/lib/seo";
 
 // Only the slugs in blogs.json exist; anything else is a 404
 export const dynamicParams = false;
@@ -34,11 +33,17 @@ export async function generateMetadata({
     },
     openGraph: {
       type: "article",
+      url: `/blog/${post.slug}`,
       title: post.title,
       description: post.excerpt,
       publishedTime: post.date,
       authors: [site.name],
       tags: post.tags,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
     },
   };
 }
@@ -61,22 +66,53 @@ export default async function BlogPostPage({
     ),
   ].slice(0, 3);
 
-  const jsonLd = {
+  const postUrl = `${siteUrl}/blog/${post.slug}`;
+  const schema = {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: post.title,
-    description: post.excerpt,
-    datePublished: post.date,
-    keywords: post.tags.join(", "),
-    url: `${siteUrl}/blog/${post.slug}`,
-    author: { "@type": "Person", name: site.name, url: siteUrl },
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        "@id": `${postUrl}#article`,
+        headline: post.title,
+        description: post.excerpt,
+        datePublished: post.date,
+        dateModified: post.date,
+        keywords: post.tags.join(", "),
+        timeRequired: `PT${post.readTime}M`,
+        inLanguage: "en",
+        url: postUrl,
+        mainEntityOfPage: postUrl,
+        image: `${postUrl}/opengraph-image`,
+        author: {
+          "@type": "Person",
+          "@id": `${siteUrl}/#person`,
+          name: site.name,
+          url: siteUrl,
+        },
+        publisher: { "@id": `${siteUrl}/#person` },
+        isPartOf: { "@id": `${siteUrl}/#website` },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Blog",
+            item: `${siteUrl}/blog`,
+          },
+          { "@type": "ListItem", position: 3, name: post.title, item: postUrl },
+        ],
+      },
+    ],
   };
 
   return (
     <div className="flex min-h-full flex-col">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={jsonLd(schema)}
       />
       <SiteHeader />
       <main className="flex-1">

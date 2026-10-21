@@ -1,0 +1,16 @@
+{
+  "name": "portfolio",
+  "compatibility_date": "2026-10-01",
+  // Answers the contact form; everything else is the static site in ./out
+  "main": "./worker/index.ts",
+  "assets": {
+    "directory": "./out",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
+  }
+  // Secrets (set once, they stay across deploys):
+  //   npx wrangler secret put BREVO_API_KEY
+  //   npx wrangler secret put CONTACT_FROM_EMAIL
+  //   npx wrangler secret put CONTACT_TO_EMAIL   (optional, defaults to site.email)
+}

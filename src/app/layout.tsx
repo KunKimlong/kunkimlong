@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { site } from "@/lib/data";
+import { siteDescription, siteTitle, siteUrl } from "@/lib/seo";
 import { geistSans, geistMono, instrumentSerif } from "./fonts";
 import "./globals.css";
 import { InspectGuard } from "@/components/inspect-guard";
@@ -8,15 +9,13 @@ import { PointerSpotlight } from "@/components/pointer-spotlight";
 import { MotionProvider } from "@/components/motion-provider";
 import { ScrollProgress } from "@/components/scroll-progress";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://kimlongkun.dev";
-
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${site.name} — ${site.role}`,
+    default: siteTitle,
     template: `%s | ${site.name}`,
   },
-  description: site.about,
+  description: siteDescription,
   keywords: [
     "Kimlong KUN",
     "Web Developer",
@@ -35,28 +34,24 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  // Share images come from the opengraph-image.tsx files (site card, one per article)
   openGraph: {
     type: "website",
     url: siteUrl,
     siteName: `${site.name} Portfolio`,
-    title: `${site.name} — ${site.role}`,
-    description: site.about,
+    title: siteTitle,
+    description: siteDescription,
     locale: "en_US",
-    images: [
-      {
-        url: "/images/profile-img.jpg",
-        width: 800,
-        height: 800,
-        alt: site.name,
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — ${site.role}`,
-    description: site.about,
-    images: ["/images/profile-img.jpg"],
+    title: siteTitle,
+    description: siteDescription,
   },
+  // Google Search Console ownership check; set the token in the hosting env, not here
+  ...(process.env.GOOGLE_SITE_VERIFICATION && {
+    verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
+  }),
   // Code-lines K; the Lamp and Floating templates swap in their own in their layouts
   icons: {
     icon: [

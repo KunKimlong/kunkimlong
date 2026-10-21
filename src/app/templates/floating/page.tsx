@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description:
     "The portfolio as glass cards floating over a dark, dotted ground.",
   alternates: {
-    canonical: "/templates/floating",
+    canonical: "/", // same portfolio as the main page
   },
 };
 

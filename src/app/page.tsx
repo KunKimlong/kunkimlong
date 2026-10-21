@@ -6,25 +6,11 @@ import { Resume } from "@/components/sections/resume";
 import { Blog } from "@/components/sections/blog";
 import { Contact } from "@/components/sections/contact";
 import { Toaster } from "@/components/ui/sonner";
-import { site } from "@/lib/data";
+import { jsonLd, personSchema, websiteSchema } from "@/lib/seo";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://kimlongkun.dev";
-
-const jsonLd = {
+const schema = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  name: site.name,
-  jobTitle: site.role,
-  email: site.email,
-  telephone: site.phone,
-  url: siteUrl,
-  image: `${siteUrl}/images/profile-img.jpg`,
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Phnom Penh",
-    addressCountry: "KH",
-  },
-  sameAs: [site.facebook.url, site.telegram.url, site.linkedin.url],
+  "@graph": [personSchema, websiteSchema],
 };
 
 export default function Home() {
@@ -32,7 +18,7 @@ export default function Home() {
     <div className="flex min-h-full flex-col">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={jsonLd(schema)}
       />
       <SiteHeader />
       <main className="flex-1">

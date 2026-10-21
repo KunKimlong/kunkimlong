@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { BlogList } from "@/components/blog-list";
 import { Reveal } from "@/components/reveal";
-import { blogs } from "@/lib/data";
+import { blogs, site } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -13,6 +13,14 @@ export const metadata: Metadata = {
     "Articles and notes on web development, Laravel, Java Spring, React, DevOps and teaching.",
   alternates: {
     canonical: "/blog",
+  },
+  // Without its own, the blog would share the home page's preview title and URL
+  openGraph: {
+    type: "website",
+    url: "/blog",
+    title: `Blog | ${site.name}`,
+    description:
+      "Articles and notes on web development, Laravel, Java Spring, React, DevOps and teaching.",
   },
 };
 

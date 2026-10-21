@@ -1,0 +1,8 @@
+# Cloudflare static assets: the generated share images have no file extension,
+# so tell browsers and link-preview crawlers they are PNGs
+/opengraph-image
+  Content-Type: image/png
+/blog/*/opengraph-image
+  Content-Type: image/png
+/templates/*/opengraph-image
+  Content-Type: image/png

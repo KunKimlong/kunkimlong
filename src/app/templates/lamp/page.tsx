@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: { absolute: `${site.name} — ${site.role}` },
   description: "Pull the cord to light up the portfolio.",
   alternates: {
-    canonical: "/templates/lamp",
+    canonical: "/", // same portfolio as the main page
   },
 };
 
