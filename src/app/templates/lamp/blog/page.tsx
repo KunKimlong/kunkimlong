@@ -6,7 +6,7 @@ import { blogs } from "@/lib/data";
 import { LAMP_BASE } from "@/lib/navigation";
 
 export const metadata: Metadata = {
-  title: "Blog — Lamp template",
+  title: "Blog",
   description:
     "Articles and notes on web development, Laravel, Java Spring, React, DevOps and teaching.",
   // Same articles as /blog, so point search engines there

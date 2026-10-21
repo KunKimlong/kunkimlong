@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useScroll, useSpring } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 /** Thin amber bar along the top edge showing how far down the page the reader is */
 export function ScrollProgress() {
@@ -10,6 +11,10 @@ export function ScrollProgress() {
     damping: 30,
     restDelta: 0.001,
   });
+
+  // Template pages (/templates/<name>) are standalone designs with their own progress cues
+  const pathname = usePathname();
+  if (pathname.startsWith("/templates/")) return null;
 
   return (
     <motion.div

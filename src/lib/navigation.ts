@@ -9,11 +9,13 @@ export const navLinks = [
 ];
 
 export const LAMP_BASE = "/templates/lamp";
+export const FLOATING_BASE = "/templates/floating";
 
 /** `base` is the path prefix of each template; Simple is the main site, so it has none */
 export const templates = [
   { base: "", name: "Simple" },
   { base: LAMP_BASE, name: "Lamp" },
+  { base: FLOATING_BASE, name: "Floating" },
 ];
 
 function templateOf(pathname: string) {

@@ -149,6 +149,12 @@ export function LampPortfolio() {
                 {site.facebook.handle}
               </a>
             </li>
+            <li>
+              <span>LinkedIn</span>
+              <a href={site.linkedin.url} target="_blank" rel="noopener">
+                {site.linkedin.handle}
+              </a>
+            </li>
           </ul>
           <LampContactForm />
         </div>

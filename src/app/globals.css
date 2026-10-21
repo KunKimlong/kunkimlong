@@ -168,27 +168,15 @@
   }
 }
 
-/* app/globals.css */
-@keyframes marquee-scroll {
-  to {
-    transform: translateX(calc(-50% - 0.5rem)); /* half of gap-4 */
-  }
-}
-
-.marquee-track {
-  animation-name: marquee-scroll;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track {
-    animation-play-state: paused;
-  }
+/* Fades a marquee out at both edges so items slide in and out of view */
+@utility marquee-fade {
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 12%,
+    #000 88%,
+    transparent
+  );
 }
 
 /* Native cursor is hidden only while <CustomCursor /> is active (fine pointer, motion allowed) */

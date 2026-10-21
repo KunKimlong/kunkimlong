@@ -24,7 +24,7 @@ const jsonLd = {
     addressLocality: "Phnom Penh",
     addressCountry: "KH",
   },
-  sameAs: [site.facebook.url, site.telegram.url],
+  sameAs: [site.facebook.url, site.telegram.url, site.linkedin.url],
 };
 
 export default function Home() {

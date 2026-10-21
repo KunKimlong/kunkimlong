@@ -1,9 +1,10 @@
+import Image from "next/image";
 import { Mail, Phone, Briefcase, User } from "lucide-react";
 import { site, skillGroups } from "@/lib/data";
 import { SkillBar } from "@/components/skill-bar";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal, RevealGroup, RevealItem } from "@/components/reveal";
-import Marquee from "@/components/ui/marquee";
+import { Marquee } from "@/components/ui/marquee";
 
 const quickFacts = [
   { icon: User, label: "Name", value: site.name },
@@ -12,21 +13,21 @@ const quickFacts = [
   { icon: Phone, label: "Phone", value: site.phone },
 ];
 
-const prefix = "/images/";
-const images: string[] = [
-  prefix + "html.png",
-  prefix + "css.png",
-  prefix + "bootstrap.png",
-  prefix + "tailwind.png",
-  prefix + "js.png",
-  prefix + "jquery.png",
-  prefix + "react.png",
-  prefix + "vue.png",
-  prefix + "angular.png",
-  prefix + "nextjs.png",
-  prefix + "php.png",
-  prefix + "laravel.png",
-  prefix + "spring.png",
+// Tools shown in the marquee band under the skills
+const stack = [
+  { name: "HTML", src: "/images/html.png" },
+  { name: "CSS", src: "/images/css.png" },
+  { name: "Bootstrap", src: "/images/bootstrap.png" },
+  { name: "Tailwind", src: "/images/tailwind.png" },
+  { name: "JavaScript", src: "/images/js.png" },
+  { name: "jQuery", src: "/images/jquery.png" },
+  { name: "React", src: "/images/react.png" },
+  { name: "Vue", src: "/images/vue.png" },
+  { name: "Angular", src: "/images/angular.png" },
+  { name: "Next.js", src: "/images/nextjs.png" },
+  { name: "PHP", src: "/images/php.png" },
+  { name: "Laravel", src: "/images/laravel.png" },
+  { name: "Java Spring", src: "/images/spring.png" },
 ];
 
 export function About() {
@@ -97,10 +98,61 @@ export function About() {
             </RevealItem>
           ))}
         </RevealGroup>
-        <div className="mt-16">
-          <Marquee icons={images} duration={25} />
-        </div>
       </div>
+
+      {/* Full-bleed band: logo tiles, crossed by a tilted ribbon of names running the other way */}
+      <Reveal className="relative mt-20 overflow-hidden py-10">
+        <p className="text-muted-foreground mb-6 text-center text-xs tracking-[0.2em] uppercase">
+          Tools I build with
+        </p>
+        <Marquee
+          speed={-2.5}
+          className="marquee-fade"
+          rowClassName="gap-4 py-2 pr-4"
+        >
+          {stack.map((tool) => (
+            <div
+              key={tool.name}
+              className="group border-border bg-card hover:border-primary/60 flex items-center gap-3 rounded-2xl border py-3 pr-6 pl-3 transition-[border-color,transform] duration-300 hover:-translate-y-1"
+            >
+              <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-white p-2 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                <Image
+                  src={tool.src}
+                  alt=""
+                  width={64}
+                  height={64}
+                  draggable={false}
+                  className="h-full w-full object-contain"
+                />
+              </span>
+              <span className="text-sm font-medium whitespace-nowrap">
+                {tool.name}
+              </span>
+            </div>
+          ))}
+        </Marquee>
+
+        <Marquee
+          speed={2}
+          className="bg-primary text-primary-foreground relative -mx-[5%] mt-10 w-[110%] -rotate-2 py-4 shadow-[0_20px_60px_-20px] shadow-black/60"
+          rowClassName="items-center"
+        >
+          {stack.map((tool) => (
+            <span
+              key={tool.name}
+              className="flex items-center font-serif text-3xl whitespace-nowrap italic sm:text-5xl"
+            >
+              {tool.name}
+              <span
+                aria-hidden
+                className="mx-6 text-xl not-italic opacity-60 sm:mx-8 sm:text-2xl"
+              >
+                ✦
+              </span>
+            </span>
+          ))}
+        </Marquee>
+      </Reveal>
     </section>
   );
 }

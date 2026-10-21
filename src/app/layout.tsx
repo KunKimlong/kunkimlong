@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     description: site.about,
     images: ["/images/profile-img.jpg"],
   },
-  // Code-lines K; the Lamp template swaps in its own in its layout
+  // Code-lines K; the Lamp and Floating templates swap in their own in their layouts
   icons: {
     icon: [
       { url: "/icons/k-code-32.png", sizes: "32x32", type: "image/png" },

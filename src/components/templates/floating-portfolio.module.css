@@ -1,0 +1,1496 @@
+/* A dark dotted ground with glass cards, chips and bars hovering over it */
+.root {
+  --ground: #0b0d12;
+  --surface: #161922;
+  --glass: rgba(255, 255, 255, 0.04);
+  --glass-strong: rgba(18, 20, 28, 0.72);
+  --edge: rgba(255, 255, 255, 0.09);
+  --edge-hover: rgba(255, 255, 255, 0.2);
+  --text: #e8eaf0;
+  --text-soft: #b4bac8;
+  --text-dim: #8a91a2;
+  --accent: #c6f432;
+  --on-accent: #0b0d12;
+  --shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.85);
+  --shadow-hover: 0 50px 90px -30px rgba(0, 0, 0, 0.95);
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --display: var(--font-space-grotesk), system-ui, sans-serif;
+  --mono: var(--font-plex-mono), ui-monospace, Menlo, monospace;
+
+  position: relative;
+  z-index: 61; /* above the global film grain */
+  flex: 1;
+  min-height: 100vh;
+  overflow-x: clip; /* chips and orbs poke past the edge; clip keeps the sticky nav working */
+  background-color: var(--ground);
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.06) 1px,
+    transparent 1px
+  );
+  background-size: 28px 28px;
+  color: var(--text);
+  font-family: var(--display);
+  color-scheme: dark;
+}
+/* Soft lime light that follows the mouse across the ground; position comes from the shell */
+.root::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    600px circle at var(--mx, 50%) var(--my, -20%),
+    rgba(198, 244, 50, 0.07),
+    transparent 60%
+  );
+}
+.root a {
+  color: inherit;
+}
+.root ::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* ---------- Floating nav ---------- */
+.topbar {
+  position: sticky;
+  top: 16px;
+  z-index: 30;
+  padding: 20px 16px 0;
+}
+/*
+ * Frosted glass: a light tint over a heavy blur and saturation boost, a bright top
+ * edge, and a hairline border that catches the light at the top-left. The pill's glass
+ * lives on ::before, because an element with its own backdrop-filter stops children
+ * (the dropdown) from blurring the page behind it.
+ */
+.pill::before,
+.menuPanel {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(255, 255, 255, 0.04) 45%,
+      rgba(255, 255, 255, 0.08) 100%
+    ),
+    rgba(18, 22, 30, 0.38);
+  backdrop-filter: blur(24px) saturate(1.8);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+    0 20px 50px -20px rgba(0, 0, 0, 0.75);
+}
+.pill {
+  position: relative;
+  isolation: isolate;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 8px 8px 24px;
+  border-radius: 999px;
+  transition: max-width 0.5s var(--ease);
+}
+.pill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  transition:
+    background-color 0.4s,
+    box-shadow 0.4s;
+}
+/* Light-catching hairline border: bright at the top-left, fading around the pill */
+.pill::after,
+.menuPanel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.45),
+    rgba(255, 255, 255, 0.08) 35%,
+    rgba(255, 255, 255, 0.04) 65%,
+    rgba(198, 244, 50, 0.3)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+/* A soft streak of light glides across the glass every few seconds */
+.glassShine {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.glassShine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 30%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent
+  );
+  transform: translateX(-120%) skewX(-20deg);
+  animation: glass-shine 7s ease-in-out 2s infinite;
+}
+@keyframes glass-shine {
+  0% {
+    transform: translateX(-120%) skewX(-20deg);
+  }
+  35%,
+  100% {
+    transform: translateX(420%) skewX(-20deg);
+  }
+}
+/* Once the page moves, the pill tightens and the tint deepens so it reads over any card */
+.pillScrolled {
+  max-width: 820px;
+}
+.pillScrolled::before {
+  background-color: rgba(14, 17, 24, 0.58);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+    0 24px 60px -18px rgba(0, 0, 0, 0.9),
+    0 0 40px -10px rgba(198, 244, 50, 0.12);
+}
+/* Reading progress, drawn along the pill's lower edge */
+.progress {
+  position: absolute;
+  left: 28px;
+  right: 28px;
+  bottom: -1px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+  transform-origin: left;
+  pointer-events: none;
+}
+
+.brand {
+  font-family: var(--display);
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-decoration: none;
+}
+.brandDot {
+  display: inline-block;
+  color: var(--accent);
+  transition: transform 0.4s var(--ease);
+}
+.brand:hover .brandDot {
+  transform: translateY(-6px) scale(1.4);
+}
+
+.desktopNav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 15px;
+}
+.navLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 9px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--text-soft);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.25s;
+}
+.root .navLink:hover,
+.root .navLink[aria-current="location"],
+.root .navLink[aria-expanded="true"] {
+  color: #fff;
+}
+.navText {
+  position: relative;
+  z-index: 1;
+}
+/* Glass bubble that slides between links (framer layoutId) */
+.bubble {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0.05)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 6px 16px -8px rgba(0, 0, 0, 0.6);
+}
+.chevron {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.3s var(--ease);
+}
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.menu {
+  position: relative;
+}
+/* Invisible bridge so the pointer can cross the gap without the panel closing */
+.menu::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 18px;
+}
+.menuPanel {
+  position: absolute;
+  top: calc(100% + 18px);
+  right: -12px;
+  min-width: 190px;
+  padding: 8px;
+  border-radius: 20px;
+  transform-origin: top right;
+}
+.menuList {
+  display: grid;
+}
+.menuPanel a {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 12px;
+  color: var(--text-soft);
+  text-decoration: none;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    padding 0.25s var(--ease);
+}
+.root .menuPanel a:hover {
+  padding-left: 20px;
+  background: rgba(255, 255, 255, 0.07);
+  color: #fff;
+}
+.root .menuPanel a[aria-current="page"] {
+  color: var(--accent);
+}
+.menuLabel {
+  padding: 12px 14px 4px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.navEnd {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.mobileNav {
+  display: none;
+}
+.menuToggle {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.16),
+    rgba(255, 255, 255, 0.04)
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  color: var(--text);
+  cursor: pointer;
+}
+.menuToggle svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ---------- Buttons ---------- */
+.magnetic {
+  display: inline-block;
+}
+.hire,
+.btnPrimary,
+.btnGhost,
+.btnBig {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.3s var(--ease),
+    box-shadow 0.3s,
+    background-color 0.3s;
+}
+.root .hire,
+.root .btnPrimary,
+.root .btnBig {
+  border: 0;
+  background: var(--accent);
+  color: var(--on-accent);
+}
+/* A streak of light sweeps across accent buttons on hover */
+.hire::after,
+.btnPrimary::after,
+.btnBig::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.65) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  transition: transform 0.7s var(--ease);
+}
+.hire:hover::after,
+.btnPrimary:hover::after,
+.btnBig:hover::after {
+  transform: translateX(120%);
+}
+.hire:hover,
+.btnPrimary:hover,
+.btnBig:hover {
+  box-shadow: 0 18px 40px -14px rgba(198, 244, 50, 0.7);
+}
+.btnPrimary:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+.hireDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--on-accent);
+  animation: blink 1.6s ease-in-out infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+.btnGhost {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  font-weight: 500;
+}
+.btnGhost:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.btnBig {
+  min-height: 60px;
+  padding: 0 34px;
+  font-size: 18px;
+}
+
+/* ---------- Dock ---------- */
+.dock {
+  position: fixed;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  width: max-content;
+  margin-inline: auto;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 24px;
+  background: var(--glass-strong);
+  backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid var(--edge);
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.9);
+}
+.dock a {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  transition:
+    background-color 0.25s,
+    color 0.25s,
+    box-shadow 0.25s;
+}
+/* The icon under the pointer lights up in the accent, like the other accent buttons */
+.root .dock a:hover,
+.root .dock a:focus-visible {
+  background: var(--accent);
+  color: var(--on-accent);
+  box-shadow: 0 12px 28px -10px rgba(198, 244, 50, 0.7);
+}
+.dock svg {
+  width: 40%;
+  height: 40%;
+  max-width: 24px;
+  max-height: 24px;
+}
+/* Glass label above the hovered icon, since the buttons carry no text */
+.dock a::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgba(18, 22, 30, 0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--edge);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, 6px);
+  transition:
+    opacity 0.2s,
+    transform 0.2s var(--ease);
+  pointer-events: none;
+}
+.dock a:hover::after,
+.dock a:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.main {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.footer {
+  position: relative;
+  padding: 60px 24px 140px; /* room for the dock */
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  min-height: calc(100vh - 100px);
+  min-height: calc(100svh - 100px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0 80px;
+  text-align: center;
+}
+/* Two blurred lights drifting behind the name */
+.orbs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.orbs span {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.35;
+}
+.orbs span:first-child {
+  left: 12%;
+  top: 8%;
+  background: rgba(198, 244, 50, 0.35);
+  animation: orb 18s ease-in-out infinite;
+}
+.orbs span:last-child {
+  right: 8%;
+  bottom: 0;
+  background: rgba(125, 211, 252, 0.3);
+  animation: orb 22s ease-in-out -8s infinite reverse;
+}
+@keyframes orb {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(120px, 60px) scale(1.15);
+  }
+  66% {
+    transform: translate(-60px, 110px) scale(0.9);
+  }
+}
+
+.heroText {
+  position: relative;
+  max-width: 860px;
+}
+.eyebrow,
+.kicker,
+.when,
+.groupLabel {
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 22px;
+  font-size: 14px;
+  color: var(--accent);
+}
+/* One role at a time, rolling up like a ticker */
+.roles {
+  display: inline-grid;
+  height: 1.4em;
+  overflow: hidden;
+  line-height: 1.4;
+}
+.roles > span {
+  grid-area: 1 / 1;
+  justify-self: end; /* hug the separator dot, whatever the role's length */
+  white-space: nowrap;
+  animation: roll 12s var(--ease) infinite;
+  opacity: 0;
+}
+.roles > span:nth-child(2) {
+  animation-delay: 3s;
+}
+.roles > span:nth-child(3) {
+  animation-delay: 6s;
+}
+.roles > span:nth-child(4) {
+  animation-delay: 9s;
+}
+@keyframes roll {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  4%,
+  22% {
+    opacity: 1;
+    transform: none;
+  }
+  26%,
+  100% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+.hero h1 {
+  margin: 0;
+  font-size: clamp(48px, 9vw, 112px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+.accentDot {
+  display: inline-block;
+  color: var(--accent);
+  animation: dot-drop 1s var(--ease) 0.9s both;
+}
+@keyframes dot-drop {
+  0% {
+    opacity: 0;
+    transform: translateY(-120px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(8px);
+  }
+  80% {
+    transform: translateY(-4px);
+  }
+}
+.lead {
+  max-width: 620px;
+  margin: 26px auto 0;
+  font-size: 19px;
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+.slogan {
+  margin: 16px auto 0;
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--text-dim);
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 38px;
+}
+.actions a {
+  min-height: 54px;
+  padding: 0 30px;
+  font-size: 16px;
+}
+
+/* Chip slots take position (and the pointer parallax); the chip inside bobs */
+.chipSlot {
+  position: absolute;
+  z-index: 1;
+}
+.chip {
+  display: grid;
+  gap: 4px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.9);
+  text-align: left;
+  font-size: 14px;
+  animation: bob 7s ease-in-out infinite;
+}
+.chip span {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.chip strong {
+  font-size: 16px;
+  font-weight: 600;
+}
+.chip1 {
+  left: 0;
+  top: 18%;
+}
+.chip1 .chip {
+  animation-duration: 6s;
+  rotate: -4deg;
+}
+.chip2 {
+  right: 0;
+  top: 12%;
+}
+.chip2 .chip {
+  animation-delay: -2s;
+  rotate: 3deg;
+}
+.chip3 {
+  left: 5%;
+  bottom: 16%;
+}
+.chip3 .chip {
+  animation-delay: -4s;
+  animation-duration: 8s;
+  rotate: 2deg;
+}
+.chip4 {
+  right: 5%;
+  bottom: 20%;
+}
+.chip4 .chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation-duration: 8s;
+  animation-delay: -1s;
+  rotate: -2deg;
+}
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  animation: ping 2s ease-out infinite;
+}
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-16px);
+  }
+}
+/* Gentler bob for pills packed in rows, so they never drift into the row or label above */
+@keyframes bob-small {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+@keyframes ping {
+  from {
+    box-shadow: 0 0 0 0 rgba(198, 244, 50, 0.7);
+  }
+  to {
+    box-shadow: 0 0 0 10px rgba(198, 244, 50, 0);
+  }
+}
+
+/* Mouse-shaped cue with a wheel that keeps rolling down */
+.scrollCue {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  width: 26px;
+  height: 42px;
+  margin-left: -13px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 14px;
+  opacity: 0;
+  animation: fade-in 0.8s ease 2s forwards;
+}
+.scrollCue span {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  width: 4px;
+  height: 8px;
+  margin-left: -2px;
+  border-radius: 2px;
+  background: var(--accent);
+  animation: wheel 1.8s ease-in-out infinite;
+}
+@keyframes wheel {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+@keyframes fade-in {
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---------- Sections ---------- */
+.section {
+  padding: 110px 0 20px;
+  scroll-margin-top: 80px;
+}
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+.kickerLine {
+  transform-origin: left;
+  width: 28px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+.title,
+.subhead,
+.section h2 {
+  margin: 0 0 44px;
+  font-size: clamp(34px, 5vw, 52px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+.section .subhead {
+  /* outranks `.section h2`, which would otherwise reset this to 0 */
+  margin-top: 90px;
+}
+.sectionHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 44px;
+}
+.sectionHead .title {
+  margin: 0;
+}
+.root .allLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  color: var(--text-soft);
+  text-underline-offset: 5px;
+  transition: color 0.2s;
+}
+.allLink span {
+  transition: transform 0.3s var(--ease);
+}
+.root .allLink:hover {
+  color: var(--accent);
+}
+.allLink:hover span {
+  transform: translateX(6px);
+}
+
+/* Cards: the wrapper swings in on scroll, the card tilts toward the pointer */
+.cardWrap {
+  min-width: 0;
+}
+.card {
+  position: relative;
+  display: block;
+  padding: 28px;
+  border-radius: 28px;
+  background: var(--glass);
+  border: 1px solid var(--edge);
+  box-shadow: var(--shadow);
+  text-decoration: none;
+  transition:
+    box-shadow 0.4s,
+    border-color 0.4s,
+    background-color 0.4s;
+}
+.card:hover,
+.card:focus-visible {
+  border-color: var(--edge-hover);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: var(--shadow-hover);
+}
+/* Glare that follows the pointer across a tilting card */
+.sheen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    420px circle at var(--sx, 50%) var(--sy, 0%),
+    rgba(198, 244, 50, 0.12),
+    transparent 45%
+  );
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+.sheen:hover::before {
+  opacity: 1;
+}
+.card h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.arrow {
+  display: inline-block;
+  color: var(--accent);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition:
+    opacity 0.3s,
+    transform 0.3s var(--ease);
+}
+.card:hover .arrow,
+.card:focus-visible .arrow {
+  opacity: 1;
+  transform: none;
+}
+
+.aboutCard {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 40px;
+  padding: 40px;
+  border-radius: 32px;
+}
+.aboutCard > div {
+  flex: 999 1 420px;
+  min-width: 0;
+}
+.root .aboutCard h2 {
+  margin: 0 0 16px;
+  font-size: 40px;
+}
+.photo {
+  flex: 0 0 auto;
+  width: 220px;
+  height: 280px; /* portrait frame, so the full-length photo keeps head, shoulders and scenery */
+  border-radius: 28px;
+  object-fit: cover;
+  object-position: 50% 42%;
+  rotate: -4deg;
+  box-shadow: var(--shadow);
+  outline: 1px solid rgba(255, 255, 255, 0.12);
+  outline-offset: 6px;
+  animation: bob 8s ease-in-out infinite;
+  transition: rotate 0.5s var(--ease);
+}
+.aboutCard:hover .photo {
+  rotate: 2deg;
+}
+.prose {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--text-soft);
+}
+
+.skillGroup + .skillGroup {
+  margin-top: 44px;
+}
+.groupLabel {
+  margin: 0 0 14px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 14px; /* row gap leaves room for the bob and the hover jump */
+  margin: 12px 0 0; /* clear of the group label, even at the top of the bob */
+  padding: 12px 0 0;
+  list-style: none;
+}
+.skills li {
+  cursor: default;
+}
+.skillPill {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 14px 22px;
+  border-radius: 20px;
+  background: var(--glass);
+  border: 1px solid var(--edge);
+  font-size: 18px;
+  font-weight: 600;
+  animation: bob-small 7s ease-in-out infinite;
+  transition:
+    border-color 0.3s,
+    background-color 0.3s,
+    box-shadow 0.3s;
+}
+.skills li:nth-child(3n + 1) .skillPill {
+  animation-duration: 6s;
+}
+.skills li:nth-child(3n + 2) .skillPill {
+  animation-delay: -2s;
+}
+.skills li:nth-child(3n) .skillPill {
+  animation-duration: 8s;
+  animation-delay: -4s;
+}
+.skills li:hover .skillPill {
+  border-color: var(--accent);
+  box-shadow: 0 16px 36px -16px rgba(198, 244, 50, 0.5);
+}
+.level {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-dim);
+}
+.skillPill.top {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+.skillPill.top .level {
+  color: var(--on-accent);
+}
+
+/* Cards in a row, each hung a little lower than the last */
+.stagger,
+.postGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  align-items: start;
+  gap: 28px;
+}
+.postGrid {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+.stagger > :nth-child(2) {
+  margin-top: 56px;
+}
+.postGrid > :nth-child(3n + 2) {
+  margin-top: 56px;
+}
+.postGrid > :nth-child(3n) {
+  margin-top: 112px;
+}
+.when {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.now {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 10px;
+  animation: ping 2s ease-out infinite;
+}
+.where {
+  margin: 6px 0 0;
+  color: var(--text-soft);
+}
+.details {
+  margin: 18px 0 0;
+  padding-left: 18px;
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+.details li + li {
+  margin-top: 8px;
+}
+.details li::marker {
+  color: var(--accent);
+}
+.excerpt {
+  margin: 10px 0 18px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-soft);
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: flex-start; /* rows never stretch, even in a tall card */
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.tags li {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-soft);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+.card:hover .tags li {
+  background: rgba(198, 244, 50, 0.12);
+  color: var(--text);
+}
+
+/* ---------- Contact ---------- */
+.contact {
+  text-align: center;
+}
+.root .big {
+  max-width: 800px;
+  margin: 0 auto 36px;
+  font-size: clamp(42px, 7vw, 80px);
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+}
+.contactGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  align-items: start;
+  gap: 28px;
+  margin-top: 70px;
+  text-align: left;
+}
+.links {
+  display: grid;
+  gap: 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.links li {
+  display: grid;
+  gap: 4px;
+  line-height: 1.5;
+}
+.links span {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.links a {
+  text-underline-offset: 4px;
+}
+.root .links a:hover {
+  color: var(--accent);
+}
+
+.form {
+  display: grid;
+  gap: 18px;
+}
+.formHead h3 {
+  margin: 0;
+}
+.formHead p {
+  margin: 6px 0 0;
+  color: var(--text-dim);
+}
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.field {
+  position: relative;
+  display: grid;
+  gap: 8px;
+}
+.field > span,
+.field > label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  transition: color 0.2s;
+}
+.field:focus-within > span,
+.field:focus-within > label {
+  color: var(--accent);
+}
+.field em {
+  font-style: normal;
+  color: var(--accent);
+}
+.field input,
+.field textarea {
+  width: 100%;
+  padding: 13px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--edge);
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--text);
+  font: inherit;
+  font-size: 15px;
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s,
+    transform 0.25s var(--ease);
+}
+.field textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #6b7284;
+}
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(198, 244, 50, 0.18);
+  transform: translateY(-2px);
+}
+.counter {
+  justify-self: end;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.form .btnPrimary {
+  justify-self: start;
+  min-height: 50px;
+  padding: 0 26px;
+}
+
+/* ---------- Blog pages ---------- */
+.pageHead {
+  max-width: 860px;
+  padding: 90px 0 0;
+}
+.pageHead h1 {
+  margin: 0;
+  font-size: clamp(40px, 6vw, 76px);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+}
+.pageHead .lead {
+  margin-left: 0;
+}
+.root .crumb {
+  display: flex; /* own line, above the page label */
+  width: fit-content;
+  margin-bottom: 28px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text-soft);
+  text-decoration: none;
+  transition:
+    color 0.2s,
+    transform 0.3s var(--ease);
+}
+.root .crumb:hover {
+  color: var(--accent);
+  transform: translateX(-6px);
+}
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+  font-family: var(--mono);
+  font-size: 13px;
+}
+.meta span {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--glass);
+  border: 1px solid var(--edge);
+  color: var(--text-soft);
+}
+
+.articleGrid {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  align-items: start;
+  gap: 28px;
+  margin-top: 64px;
+}
+.articleAside {
+  position: sticky;
+  top: 120px;
+  display: grid;
+  gap: 24px;
+}
+.articleAside dl {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+}
+.articleAside dt {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.articleAside dd {
+  margin: 4px 0 0;
+}
+
+.article {
+  max-width: 70ch;
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--text-soft);
+}
+.article > :first-child {
+  margin-top: 0;
+}
+.article h2 {
+  margin: 40px 0 12px;
+  font-size: 26px;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.article p {
+  margin: 0 0 18px;
+}
+.article ul {
+  margin: 0 0 18px;
+  padding-left: 22px;
+}
+.article li + li {
+  margin-top: 6px;
+}
+.article li::marker {
+  color: var(--accent);
+}
+.article blockquote {
+  margin: 28px 0;
+  padding: 20px 24px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--edge);
+  font-size: 19px;
+  color: var(--text);
+}
+.article figure {
+  margin: 24px 0;
+}
+.article figcaption {
+  margin-bottom: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.article pre {
+  margin: 0;
+  padding: 18px 20px;
+  overflow-x: auto;
+  border-radius: 16px;
+  background: var(--surface);
+  border: 1px solid var(--edge);
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+}
+.article + .allLink {
+  margin-top: 12px;
+}
+
+/* ---------- Smaller screens ---------- */
+@media (max-width: 1100px) {
+  .chipSlot {
+    display: none;
+  }
+}
+@media (max-width: 900px) {
+  .desktopNav {
+    display: none;
+  }
+  .mobileNav {
+    display: block;
+  }
+  .contactGrid,
+  .articleGrid {
+    grid-template-columns: minmax(
+      0,
+      1fr
+    ); /* wide code blocks scroll instead of widening the page */
+  }
+  .articleAside {
+    position: static;
+  }
+  .stagger > :nth-child(n),
+  .postGrid > :nth-child(n) {
+    margin-top: 0;
+  }
+}
+@media (max-width: 640px) {
+  .main {
+    padding: 0 16px;
+  }
+  .pill {
+    padding-left: 18px;
+  }
+  .hire {
+    padding: 0 16px;
+  }
+  .hero {
+    min-height: 0;
+    padding: 80px 0 100px;
+  }
+  .lead {
+    font-size: 17px;
+  }
+  .orbs span {
+    width: 260px;
+    height: 260px;
+  }
+  .stagger,
+  .postGrid {
+    grid-template-columns: 1fr;
+  }
+  .card,
+  .aboutCard {
+    padding: 22px;
+  }
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+  .section {
+    padding-top: 80px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glassShine::before,
+  .orbs span,
+  .roles > span,
+  .accentDot,
+  .chip,
+  .dot,
+  .now,
+  .hireDot,
+  .photo,
+  .skillPill,
+  .scrollCue span {
+    animation: none;
+  }
+  .roles > span:not(:first-child) {
+    display: none;
+  }
+  .roles > span:first-child {
+    opacity: 1;
+  }
+  .scrollCue {
+    opacity: 1;
+  }
+  .hire::after,
+  .btnPrimary::after,
+  .btnBig::after {
+    display: none;
+  }
+}

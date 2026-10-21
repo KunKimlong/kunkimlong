@@ -2,6 +2,7 @@ import { site } from "@/lib/data";
 import { ContactForm } from "@/components/contact-form";
 import { MapPin, Phone, Mail, Send } from "lucide-react";
 import { FacebookIcon } from "@/components/icons/facebook-icon";
+import { LinkedinIcon } from "@/components/icons/linkedin-icon";
 import { SectionHeading } from "@/components/section-heading";
 import { Reveal, RevealGroup, RevealItem } from "@/components/reveal";
 
@@ -24,6 +25,7 @@ const infoRows = [
 const socials = [
   { icon: FacebookIcon, label: "Facebook", href: site.facebook.url },
   { icon: Send, label: "Telegram", href: site.telegram.url },
+  { icon: LinkedinIcon, label: "LinkedIn", href: site.linkedin.url },
 ];
 
 export function Contact() {

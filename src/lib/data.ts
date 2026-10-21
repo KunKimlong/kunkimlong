@@ -1,8 +1,15 @@
 import blogsJson from "./blogs.json";
 
 const devExperienceStartYear = 2024; // ALLWEB Company - first professional dev role
+
+// Experience counts from the first web role, teaching at ETEC (August 2023), in whole
+// years: it only goes up once another full year has passed since that month
+const experienceStart = { year: 2023, month: 8 };
+const now = new Date();
 export const yearsOfExperience =
-  new Date().getFullYear() - devExperienceStartYear;
+  now.getFullYear() -
+  experienceStart.year -
+  (now.getMonth() + 1 < experienceStart.month ? 1 : 0);
 
 export const site = {
   name: "Kimlong KUN",
@@ -18,6 +25,11 @@ export const site = {
     src: "/images/me-lamp.jpg",
     alt: "Kimlong KUN sitting in front of Angkor Wat",
     caption: "Angkor Wat · KH",
+  },
+  // The Floating template's About card uses an outdoor, full-length portrait
+  floatPhoto: {
+    src: "/images/me-float.png",
+    alt: "Kimlong KUN standing by a lake, with a Ferris wheel and wooden houses behind",
   },
   tagline: [
     "Full-stack Web Developer",
@@ -35,6 +47,10 @@ export const site = {
   telegram: {
     url: "https://t.me/Kun_KimLong",
     handle: "@Kun_KimLong",
+  },
+  linkedin: {
+    url: "https://www.linkedin.com/in/kimlong-kun-793b472b0/",
+    handle: "Kimlong KUN",
   },
   about: `I am a Web Developer with ${yearsOfExperience} years of experience specializing in full-stack web development using Laravel, Java Spring, React, and Angular. I have built and deployed applications such as HRMS (Human Resource Management System) and Family Partner at ALLWEB Company, working with PostgreSQL, MongoDB, Docker, and Ansible. I also have experience as a Web Instructor at ETEC Center, teaching programming languages and web technologies including C, C++, PHP, MySQL, and Laravel. I'm passionate about creating efficient, user-friendly web applications and continuously learning new technologies.`,
 } as const;
