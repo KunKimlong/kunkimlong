@@ -52,7 +52,7 @@ export const site = {
     url: "https://www.linkedin.com/in/kimlong-kun-793b472b0/",
     handle: "Kimlong KUN",
   },
-  about: `I am a Web Developer with ${yearsOfExperience} years of experience specializing in full-stack web development using Laravel, Java Spring, React, and Angular. I have built and deployed applications such as HRMS (Human Resource Management System) and Family Partner at ALLWEB Company, working with PostgreSQL, MongoDB, Docker, and Ansible. I also have experience as a Web Instructor at ETEC Center, teaching programming languages and web technologies including C, C++, PHP, MySQL, and Laravel. I'm passionate about creating efficient, user-friendly web applications and continuously learning new technologies.`,
+  about: `I am a Web Developer with ${yearsOfExperience} years of experience specializing in full-stack web development using Laravel, Java Spring, React, and Angular. I have built and deployed applications such as HRMS (Human Resource Management System), a wealth-reporting platform and a telemedicine platform at ALLWEB Company, working with PostgreSQL, MongoDB, Docker, and Ansible. I also have experience as a Web Instructor at ETEC Center, teaching programming languages and web technologies including C, C++, PHP, MySQL, and Laravel. I'm passionate about creating efficient, user-friendly web applications and continuously learning new technologies.`,
 } as const;
 
 export const education = [
@@ -86,8 +86,8 @@ export const experiences: Experience[] = [
     location: "Khan Beong Keng Kang, Phnom Penh",
     details: [
       "Developed HRMS (Human Resource Management System) with backend using Laravel and the frontend with Laravel Blade, integrating it with Java Spring microservices to create employee reports and send mail notifications to employees, connected to PostgreSQL and MongoDB databases, with views built in React and TypeScript. Also managed deployment using Docker and Ansible.",
-      "Developed FAPA (Family Partner wealth-reporting platform) to consolidate each client's assets and liabilities into branded PDF reports, with a Java Spring Boot backend connected to a PostgreSQL database, an Angular frontend, and a Node.js chart-rendering service. Also automated Excel data imports with Spring Batch and deployed with Docker to Azure.",
-      "Developed Fueni (telemedicine platform) with portals for patients, doctors and admins, using a Java Spring Boot backend built on hexagonal architecture and connected to a PostgreSQL database, with the frontend built in Next.js, React and TypeScript, and Keycloak for authentication. Also shipped it with Docker through GitLab CI.",
+      "Developed a wealth-reporting platform to consolidate each client's assets and liabilities into branded PDF reports, with a Java Spring Boot backend connected to a PostgreSQL database, an Angular frontend, and a Node.js chart-rendering service. Also automated Excel data imports with Spring Batch and deployed with Docker to Azure.",
+      "Developed a telemedicine platform with portals for patients, doctors and admins, using a Java Spring Boot backend built on hexagonal architecture and connected to a PostgreSQL database, with the frontend built in Next.js, React and TypeScript, and Keycloak for authentication. Also shipped it with Docker through GitLab CI.",
       "Managed software projects using OpenProject and Jira.",
     ],
   },
