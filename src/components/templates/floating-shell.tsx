@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
-import { ChevronDown, Mail, Menu, Phone, Send, X } from "lucide-react";
+import { ArrowUp, ChevronDown, Mail, Menu, Phone, Send, X } from "lucide-react";
 import { site } from "@/lib/data";
 import {
   FLOATING_BASE,
@@ -165,6 +165,8 @@ export function FloatingShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const onHome = pathname === FLOATING_BASE;
   const [scrolled, setScrolled] = useState(false);
+  // Shows the back-to-top button once the hero is out of view
+  const [farDown, setFarDown] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [hovered, setHovered] = useState<string | null>(null);
   const { scrollYProgress } = useScroll();
@@ -174,7 +176,10 @@ export function FloatingShell({ children }: { children: ReactNode }) {
   });
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
+      setFarDown(window.scrollY > 600);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
@@ -287,6 +292,20 @@ export function FloatingShell({ children }: { children: ReactNode }) {
       </footer>
 
       <Dock items={dockItems} />
+      <button
+        type="button"
+        className={cn(styles.toTop, farDown && styles.toTopShown)}
+        aria-label="Back to top"
+        tabIndex={farDown ? 0 : -1}
+        onClick={() => {
+          const reduce = window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+          ).matches;
+          window.scrollTo({ top: 0, behavior: reduce ? "instant" : "smooth" });
+        }}
+      >
+        <ArrowUp aria-hidden="true" />
+      </button>
       <Toaster />
     </div>
   );

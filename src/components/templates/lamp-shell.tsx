@@ -244,9 +244,10 @@ export function LampShell({ children }: { children: ReactNode }) {
         setFarDown(top > 600);
       }}
     >
-      <Link href="/" className={styles.back}>
-        ← Simple template
-      </Link>
+      {/* The lit page has its own in the nav, so this one only lives in the dark */}
+      <div className={styles.darkTemplates} inert={on}>
+        <TemplatesMenu />
+      </div>
 
       {/* Beam and cord live inside the lamp so they hang from the shade and swing with it */}
       <div className={styles.lamp}>

@@ -8,6 +8,7 @@ import { CustomCursor } from "@/components/custom-cursor";
 import { PointerSpotlight } from "@/components/pointer-spotlight";
 import { MotionProvider } from "@/components/motion-provider";
 import { ScrollProgress } from "@/components/scroll-progress";
+import { ScrollToTop } from "@/components/scroll-to-top";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -87,6 +88,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <MotionProvider>
           <ScrollProgress />
           {children}
+          <ScrollToTop />
         </MotionProvider>
         <InspectGuard />
         <CustomCursor />

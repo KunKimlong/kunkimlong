@@ -255,23 +255,41 @@
   transition: opacity 0.2s ease 0s;
 }
 
-.back {
+/* Template switcher in the dark room's top-right corner */
+.darkTemplates {
   position: absolute;
   top: 22px;
-  left: max(16px, env(safe-area-inset-left, 0px));
+  right: max(16px, env(safe-area-inset-right, 0px));
   z-index: 7;
   font-family: var(--mono);
   font-size: 12px;
   letter-spacing: 0.08em;
   color: #6d6b67;
-  text-decoration: none;
   transition: opacity 0.4s;
 }
-.back:hover,
-.back:focus-visible {
+.darkTemplates .menu button:hover,
+.darkTemplates .menu button:focus-visible,
+.darkTemplates .menu button[aria-expanded="true"] {
   color: var(--warm);
 }
-.on .back {
+.darkTemplates .menuPanel {
+  border-color: var(--metal);
+  background: #141518;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+.darkTemplates .menuPanel a {
+  color: #a9a59e;
+  text-decoration: none;
+}
+.darkTemplates .menuPanel a:hover,
+.darkTemplates .menuPanel a:focus-visible {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--paper);
+}
+.darkTemplates .menuPanel a[aria-current="page"] {
+  color: var(--warm);
+}
+.on .darkTemplates {
   opacity: 0;
   pointer-events: none;
 }
@@ -729,6 +747,15 @@
   max-width: 4ch;
   margin-left: 8px;
   opacity: 1;
+}
+/* Touch screens: a tap leaves :hover at the finger's spot, so a chip that grows reflows
+   the row and its neighbour slides under the finger and takes the hover. Keep the %'s
+   room there and only fade it in, so nothing moves. */
+@media (hover: none) {
+  .level {
+    max-width: 4ch;
+    margin-left: 8px;
+  }
 }
 
 .timeline {

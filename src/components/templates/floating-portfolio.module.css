@@ -1401,6 +1401,52 @@
 }
 
 /* ---------- Smaller screens ---------- */
+/* Back-to-top: a small glass button in the corner, lit in the accent like the dock icons */
+.toTop {
+  position: fixed;
+  right: max(24px, env(safe-area-inset-right));
+  bottom: max(24px, env(safe-area-inset-bottom));
+  z-index: 30;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  border: 1px solid var(--edge);
+  background: var(--glass-strong);
+  backdrop-filter: blur(16px) saturate(1.4);
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.9);
+  color: var(--text);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition:
+    opacity 0.3s,
+    visibility 0.3s,
+    transform 0.3s var(--ease),
+    background-color 0.25s,
+    color 0.25s,
+    box-shadow 0.25s;
+}
+.toTop svg {
+  width: 20px;
+  height: 20px;
+}
+.toTopShown {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+.root .toTop:hover,
+.root .toTop:focus-visible {
+  background: var(--accent);
+  color: var(--on-accent);
+  box-shadow: 0 12px 28px -10px rgba(198, 244, 50, 0.7);
+  outline: none;
+}
+
 @media (max-width: 1100px) {
   .chipSlot {
     display: none;
@@ -1463,6 +1509,10 @@
   .section {
     padding-top: 80px;
   }
+  /* The dock spans nearly the whole width here, so sit just above it */
+  .toTop {
+    bottom: calc(max(24px, env(safe-area-inset-bottom)) + 78px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1492,5 +1542,8 @@
   .btnPrimary::after,
   .btnBig::after {
     display: none;
+  }
+  .toTop {
+    transition: none;
   }
 }
