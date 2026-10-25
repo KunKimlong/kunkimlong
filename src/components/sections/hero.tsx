@@ -98,7 +98,7 @@ export function Hero() {
           </RevealItem>
         </RevealGroup>
 
-        <div className="mx-auto w-full max-w-sm md:mx-0">
+        <div className="mx-auto w-full max-w-xs md:mr-0">
           <HeroPortrait
             src={site.photo}
             alt={site.name}
