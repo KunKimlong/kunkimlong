@@ -52,10 +52,15 @@ export const metadata: Metadata = {
   ...(process.env.GOOGLE_SITE_VERIFICATION && {
     verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
   }),
-  // Code-lines K; the Lamp and Floating templates swap in their own in their layouts
+  // Code-lines K; the Lamp and Floating templates swap in their own in their layouts.
+  // Google Search only shows favicons sized in multiples of 48px, hence the 48/96/192.
   icons: {
     icon: [
+      { url: "/favicon.ico", sizes: "16x16 32x32 48x48" },
       { url: "/icons/k-code-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icons/k-code-48.png", sizes: "48x48", type: "image/png" },
+      { url: "/icons/k-code-96.png", sizes: "96x96", type: "image/png" },
+      { url: "/icons/k-code-192.png", sizes: "192x192", type: "image/png" },
       { url: "/icons/k-code.svg", type: "image/svg+xml" },
     ],
     apple: "/icons/k-code-apple.png",
