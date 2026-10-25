@@ -112,6 +112,8 @@ export function LampShell({ children }: { children: ReactNode }) {
   const switchTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   // Gives the sticky header its backing once content scrolls beneath it
   const [scrolled, setScrolled] = useState(false);
+  // Shows the back-to-top button once the hero is out of view
+  const [farDown, setFarDown] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const cordRef = useRef<HTMLDivElement>(null);
   const stringRef = useRef<HTMLDivElement>(null);
@@ -236,7 +238,11 @@ export function LampShell({ children }: { children: ReactNode }) {
         switching && styles.switching,
         scrolled && styles.scrolled
       )}
-      onScroll={(e) => setScrolled(e.currentTarget.scrollTop > 8)}
+      onScroll={(e) => {
+        const top = e.currentTarget.scrollTop;
+        setScrolled(top > 8);
+        setFarDown(top > 600);
+      }}
     >
       <Link href="/" className={styles.back}>
         ← Simple template
@@ -330,6 +336,25 @@ export function LampShell({ children }: { children: ReactNode }) {
           </footer>
         </div>
       </main>
+
+      {/* Outside <main> too, so the clip-path never hides it */}
+      <button
+        type="button"
+        className={cn(styles.toTop, on && farDown && styles.toTopShown)}
+        aria-label="Back to top"
+        tabIndex={on && farDown ? 0 : -1}
+        onClick={() => {
+          const reduce = window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+          ).matches;
+          rootRef.current?.scrollTo({
+            top: 0,
+            behavior: reduce ? "instant" : "smooth",
+          });
+        }}
+      >
+        ↑
+      </button>
       <Toaster />
     </div>
   );

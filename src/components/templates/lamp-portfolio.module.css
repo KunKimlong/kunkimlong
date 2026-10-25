@@ -276,6 +276,55 @@
   pointer-events: none;
 }
 
+/* Back to top: fixed to the room's corner, rises in once the hero has scrolled away */
+.toTop {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right, 0px));
+  bottom: max(20px, env(safe-area-inset-bottom, 0px));
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(243, 239, 232, 0.88);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(23, 24, 27, 0.12);
+  font-family: var(--mono);
+  font-size: 18px;
+  color: var(--ink);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition:
+    opacity 0.3s,
+    transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
+    visibility 0s 0.3s,
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+.toTopShown {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity 0.3s,
+    transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+.toTop:hover,
+.toTop:focus-visible {
+  border-color: var(--warm);
+  box-shadow:
+    0 8px 24px rgba(23, 24, 27, 0.12),
+    0 0 16px rgba(255, 207, 125, 0.55);
+  outline: none;
+}
+
 /* ---------- Portfolio (revealed) ---------- */
 .site {
   position: relative;
@@ -693,6 +742,11 @@
   min-width: 0;
   padding-block: 22px;
   border-bottom: 1px solid var(--line);
+}
+/* The next section's top border already closes the list */
+.role:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
 }
 .when {
   padding-top: 6px;
@@ -1113,11 +1167,8 @@
   color: var(--ink-soft);
 }
 
-@media (max-width: 640px) {
-  .section {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
+/* Up to here the full link row reaches the middle, where the lamp's wire hangs */
+@media (max-width: 860px) {
   .desktopNav {
     display: none !important;
   }
@@ -1126,6 +1177,19 @@
   }
   .menuPanel {
     min-width: 180px;
+  }
+}
+@media (max-width: 640px) {
+  .section {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  /* Date drops under the title so the title keeps the full width */
+  .post {
+    grid-template-columns: 1fr;
+  }
+  .post .when {
+    align-self: start;
   }
   .hero {
     padding-block: 400px 56px;
@@ -1171,7 +1235,8 @@
   .wire,
   .shade,
   .bulb,
-  .beam {
+  .beam,
+  .toTop {
     transition: none;
   }
   .sway,
